@@ -40,7 +40,7 @@ defmodule Mix.Tasks.Bootstrap do
     \# So that distillery doesn't try to write any files
     export RELEASE_READ_ONLY=true
 
-    export LD_PRELOAD=$BASE/lib/#{@runtime_libs}/libcrypto.so.10
+    export LD_PRELOAD="$BASE/lib/#{@runtime_libs}/libcrypto.so.10 $BASE/lib/#{@runtime_libs}/libtinfo.so.6"
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BASE/lib/#{@runtime_libs}
 
     $EXE foreground
