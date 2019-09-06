@@ -30,16 +30,14 @@ First, create a new mix project in a fresh directory:
 > mix new --app hello_world ./hello_world
 ```
 
-Now declare a dependency on `:aws_lambda_elixir_runtime` and
-`:distillery`, which is used to package the OTP release.
+Now declare a dependency on `:aws_lambda_elixir_runtime`.
 
 Edit `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:aws_lambda_elixir_runtime, "~> 0.1.0"},
-    {:distillery, "~> 2.0"}
+    {:aws_lambda_elixir_runtime, "~> 0.1.0"}
   ]
 end
 ```
@@ -50,8 +48,8 @@ Now get the dependencies:
 > mix deps.get
 ```
 
-The `:aws_lambda_elixir_runtime` has a mix task which will generate a correct
-Distillery release file for deploying to Lambda. This is a one-time setup
+The `:aws_lambda_elixir_runtime` has a mix task which will generate files needed
+for configuration of a release used to deploy to Lambda. This is a one-time setup
 for the project because once generated the file can be versioned and customized
 like any other release. Generate the file like so:
 
@@ -90,10 +88,10 @@ Now, the project can be built and zipped:
 > mix do release, bootstrap, zip
 ```
 
-The `release` task is the standard Distillery release operation. The
+The `release` task is the standard Elixir release operation. The
 `bootstrap` task generates an executable shell script which is called by the
 AWS Lambda service to start the Elixir OTP application. And the `zip` task just
-bundles the contents of the Distillery release into a single zip file.
+bundles the contents of the release into a single zip file.
 
 When this finishes, there should be a `lambda.zip` file in the current
 directory. This file can be uploaded to AWS lambda using the AWS console or the
