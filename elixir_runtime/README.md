@@ -54,7 +54,7 @@ for the project because once generated the file can be versioned and customized
 like any other release. Generate the file like so:
 
 ```sh
-> mix gen_lambda_release
+> mix lambda.gen_lambda_release
 ```
 
 Now the project is ready to be built and deployed -- all that remains is to
@@ -85,16 +85,16 @@ accept two maps.
 Now, the project can be built and zipped:
 
 ```sh
-> mix do release, bootstrap, zip
+> mix do release, lambda.bootstrap, lambda.zip
 ```
 
 The `release` task is the standard Elixir release operation. The
-`bootstrap` task generates an executable shell script which is called by the
-AWS Lambda service to start the Elixir OTP application. And the `zip` task just
-bundles the contents of the release into a single zip file.
-
-When this finishes, there should be a `lambda.zip` file in the current
-directory. This file can be uploaded to AWS lambda using the AWS console or the
+`lambda.bootstrap` task generates an executable shell script which is called by the
+AWS Lambda service to start the Elixir OTP application. And the `lambda.zip` task just
+bundles the contents of the release into a single zip file. The `lambda.build` task runs
+`mix do deps.get, compile, release, lambda.bootstrap, lambda.zip` in a Docker container
+and copies the artifact to a `_build_/<MIX_ENV>/rel/<APP_NAME>/<APP_NAME>_<APP_VERSION>_lambda.zip`.
+This file can be uploaded to AWS lambda using the AWS console or the
 cli. Using the CLI would look like the following:
 
 ```sh
@@ -104,7 +104,7 @@ cli. Using the CLI would look like the following:
     --handler Elixir.HelloWorld:hello_world \
     --role $ROLE_ARN \
     --runtime provided \
-    --zip-file fileb://./lambda.zip
+    --zip-file fileb://./_build_/<MIX_ENV>/rel/<APP_NAME>/<APP_NAME>_<APP_VERSION>_lambda.zip
 ```
 
 Once created the function can be invoked from the console, the SDK, or the CLI.

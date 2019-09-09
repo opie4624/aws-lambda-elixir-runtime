@@ -1,7 +1,7 @@
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-defmodule Mix.Tasks.Zip do
+defmodule Mix.Tasks.Lambda.Zip do
   use Mix.Task
 
   @shortdoc "zip the contents of the current release"

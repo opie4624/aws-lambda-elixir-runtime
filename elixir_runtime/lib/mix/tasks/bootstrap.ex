@@ -1,7 +1,7 @@
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-defmodule Mix.Tasks.Bootstrap do
+defmodule Mix.Tasks.Lambda.Bootstrap do
   @moduledoc """
   Generate a bootstrap script for the project in the release directory.
   This task will fail if it's run before `mix release`.

@@ -1,7 +1,7 @@
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-defmodule Mix.Tasks.GenLambdaRelease do
+defmodule Mix.Tasks.Lambda.GenLambdaRelease do
   @moduledoc """
   Generate a distillery release configuration file for lambda release builds.
   """
@@ -15,8 +15,30 @@ defmodule Mix.Tasks.GenLambdaRelease do
       |> Keyword.fetch!(:app)
       |> to_string
 
+    Mix.Generator.create_file("config/releases.exs", releases_exs(name))
     Mix.Generator.create_file("rel/env.sh.eex", env_sh())
     Mix.Generator.create_file("rel/vm.args.eex", vm_args())
+  end
+
+  defp releases_exs(app) do
+    """
+    # This file is responsible for runtime configuration
+    # of your application and its dependencies
+    import Config
+
+    # You can configure your application as:
+    #
+    #     config :#{app}, :secret_key, System.fetch_env!("MY_APP_SECRET_KEY")
+    #
+    # and access this configuration in your application as:
+    #
+    #     Application.get_env(:#{app}, :key)
+    #
+    # You can also configure a third-party app:
+    #
+    #     config :logger, level: :info
+    #
+    """
   end
 
   defp env_sh do
