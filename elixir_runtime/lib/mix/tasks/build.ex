@@ -4,24 +4,19 @@ defmodule Mix.Tasks.Lambda.Build do
   @shortdoc "Uses Docker to build a release zip for deployment to Lambda"
 
   @moduledoc """
-  Builds tagged Docker images for apps in your umbrella.
+  Uses Docker to build a release zip for deployment to Lambda.
   ```
-  mix lambda.docker_build
+  mix lambda.build
   ```
 
   ## Examples
 
   ```
-    ❯ mix lambda.docker_build
+    ❯ mix lambda.build
     Building elixir_lambda_example version 0.1.0
     . . .
-    ---> bfd1abec1a2b
-    Successfully built bfd1abec1a2b
-    Successfully tagged elixir_lambda_example_0.1.0:latest
-    output: /workspace/lambda.zip
-    elixir_lambda_example_0.1.0
-    Lambda release built!!
-    artifact: _build/dev/rel/elixir_lambda_example/elixir_lambda_example_0.1.0_lambda.zip
+    Lambda release built
+    Artifact: _build/dev/rel/elixir_lambda_example/lambda.dev.zip
   ```
   """
 
@@ -58,7 +53,7 @@ defmodule Mix.Tasks.Lambda.Build do
          end
     end)
 
-    Mix.shell().info("Lambda release built!!")
-    Mix.shell().info("artifact: #{release_dir}/lambda.#{env}.zip")
+    Mix.shell().info("Lambda release built")
+    Mix.shell().info("Artifact: #{release_dir}/lambda.#{env}.zip")
   end
 end
