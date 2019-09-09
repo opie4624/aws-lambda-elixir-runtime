@@ -41,7 +41,7 @@ defmodule Lambda.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.1"},
       {:mox, "~> 0.4", only: :test},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
