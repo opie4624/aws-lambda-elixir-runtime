@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Bootstrap do
 
   use Mix.Task
 
-  @runtime_libs "aws_lambda_elixir_runtime-0.1.1/priv"
+  @runtime_libs "aws_lambda_elixir_runtime-0.1.1/priv/system_libraries"
 
   @shortdoc "Generate a bootstrap script for the project"
   def run(_) do
