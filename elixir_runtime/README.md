@@ -93,7 +93,7 @@ The `release` task is the standard Elixir release operation. The
 AWS Lambda service to start the Elixir OTP application. And the `lambda.zip` task just
 bundles the contents of the release into a single zip file. The `lambda.build` task runs
 `mix do deps.get, compile, release, lambda.bootstrap, lambda.zip` in a Docker container
-and copies the artifact to a `_build_/<MIX_ENV>/rel/<APP_NAME>/<APP_NAME>_<APP_VERSION>_lambda.zip`.
+and copies the artifact to a `_build_/<MIX_ENV>/rel/<APP_NAME>/lambda.<ENV>.zip`.
 This file can be uploaded to AWS lambda using the AWS console or the
 cli. Using the CLI would look like the following:
 
@@ -104,7 +104,7 @@ cli. Using the CLI would look like the following:
     --handler Elixir.HelloWorld:hello_world \
     --role $ROLE_ARN \
     --runtime provided \
-    --zip-file fileb://./_build_/<MIX_ENV>/rel/<APP_NAME>/<APP_NAME>_<APP_VERSION>_lambda.zip
+    --zip-file fileb://./_build_/<MIX_ENV>/rel/<APP_NAME>/lambda.<ENV>.zip
 ```
 
 Once created the function can be invoked from the console, the SDK, or the CLI.

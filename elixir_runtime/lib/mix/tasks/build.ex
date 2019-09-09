@@ -42,7 +42,7 @@ defmodule Mix.Tasks.Lambda.Build do
       "docker rm #{app}_#{version} || true",
       "docker build --build-arg MIX_ENV=#{env} -t #{app}_#{version} -f #{dockerfile} .",
       "docker run --name #{app}_#{version} #{app}_#{version}",
-      "docker cp #{app}_#{version}:/workspace/lambda.zip #{release_dir}/#{app}_#{version}_lambda.zip",
+      "docker cp #{app}_#{version}:/workspace/lambda.zip #{release_dir}/lambda.#{env}.zip",
       "docker rm #{app}_#{version}"
     ]
 
@@ -59,6 +59,6 @@ defmodule Mix.Tasks.Lambda.Build do
     end)
 
     Mix.shell().info("Lambda release built!!")
-    Mix.shell().info("artifact: _build/#{env}/rel/#{app}/#{app}_#{version}_lambda.zip")
+    Mix.shell().info("artifact: #{release_dir}/lambda.#{env}.zip")
   end
 end
