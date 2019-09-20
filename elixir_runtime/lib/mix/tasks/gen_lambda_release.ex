@@ -40,7 +40,7 @@ defmodule Mix.Tasks.Lambda.GenLambdaRelease do
     # export RELEASE_DISTRIBUTION=name
     # export RELEASE_NODE=<%= @release.name %>@127.0.0.1
 
-    export RELEASE_TMP="/tmp/elixir_release/${RELEASE_NAME}_${RELEASE_VERSION}"
+    export RELEASE_TMP="/tmp/elixir_release/${RELEASE_NAME}_${RELEASE_VSN}"
     """
   end
 
