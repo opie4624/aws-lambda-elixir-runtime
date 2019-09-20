@@ -37,7 +37,7 @@ defmodule Mix.Tasks.Lambda.Bootstrap do
     HOME=/tmp
     export HOME
 
-    export LD_PRELOAD="$BASE/lib/#{@runtime_libs}/libcrypto.so.10 $BASE/lib/#{@runtime_libs}/libtinfo.so.6"
+    export LD_PRELOAD="$BASE/lib/#{@runtime_libs}/libcrypto.so.10 $BASE/lib/#{@runtime_libs}/libtinfo.so.5"
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BASE/lib/#{@runtime_libs}
 
     $EXE start
