@@ -28,17 +28,19 @@ defmodule Mix.Tasks.Lambda.Build do
     version = Mix.Project.config()[:version]
     env = Mix.env()
     dockerfile = Path.expand("#{__DIR__}/../../../priv/docker/Dockerfile.build")
+    image = "#{app}:#{version}_#{env}"
+    container = "#{app}_#{version}_#{env}"
     release_dir = "_build/#{env}/rel/#{app}"
 
-    Mix.shell().info("Building #{app} version #{version}")
+    Mix.shell().info("Building #{app} version #{version} #{env} release")
     File.mkdir_p(release_dir)
 
     commands = [
-      "docker rm #{app}_#{version} || true",
-      "docker build --build-arg MIX_ENV=#{env} -t #{app}_#{version} -f #{dockerfile} .",
-      "docker run --name #{app}_#{version} #{app}_#{version}",
-      "docker cp #{app}_#{version}:/workspace/lambda.zip #{release_dir}/lambda.#{env}.zip",
-      "docker rm #{app}_#{version}"
+      "docker rm #{container} > /dev/null 2>&1 || true",
+      "docker build --build-arg MIX_ENV=#{env} -t #{image} -f #{dockerfile} .",
+      "docker run --name #{container} #{image}",
+      "docker cp #{container}:/workspace/lambda.zip #{release_dir}/lambda.#{env}.zip",
+      "docker rm #{container}"
     ]
 
     Enum.each(commands, fn command ->
