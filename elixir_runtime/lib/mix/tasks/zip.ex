@@ -8,15 +8,15 @@ defmodule Mix.Tasks.Lambda.Zip do
   def run(_) do
     app = app_name()
     version = app_version()
-    path = release_path(app)
-    {:ok, cwd} = File.cwd()
+    env = Mix.env()
+    release_dir = "_build/#{env}/rel/#{app}"
 
-    cmd = "cd #{path} && \
+    cmd = "cd #{release_dir} && \
     chmod +x bin/#{app} && \
     chmod +x releases/#{version}/elixir && \
     chmod +x erts-*/bin/erl && \
-    zip -r lambda.zip * && \
-    cp lambda.zip #{cwd}"
+    zip -r #{app}_lambda.zip * && \
+    mv #{app}_lambda.zip ../"
 
     System.cmd("sh", ["-c", cmd])
   end
@@ -31,9 +31,5 @@ defmodule Mix.Tasks.Lambda.Zip do
     Mix.Project.config()
     |> Keyword.fetch!(:version)
     |> to_string
-  end
-
-  defp release_path(app) do
-    "_build/#{Mix.env()}/rel/#{app}/"
   end
 end

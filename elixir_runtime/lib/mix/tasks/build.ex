@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Lambda.Build do
+defmodule Mix.Tasks.Lambda.Build.Docker do
   use Mix.Task
 
   @shortdoc "Uses Docker to build a release zip for deployment to Lambda"
@@ -21,16 +21,14 @@ defmodule Mix.Tasks.Lambda.Build do
   """
 
   def run(_args) do
-    app =
-      Mix.Project.config()
-      |> Keyword.fetch!(:app)
-      |> to_string
     version = Mix.Project.config()[:version]
+    app = app_name()
     env = Mix.env()
     dockerfile = Path.expand("#{__DIR__}/../../../priv/docker/Dockerfile.build")
     image = "#{app}:#{version}_#{env}"
     container = "#{app}_#{version}_#{env}"
     release_dir = "_build/#{env}/rel/#{app}"
+    zipfile = "_build/#{env}/rel/#{app}_lambda.zip"
 
     Mix.shell().info("Building #{app} version #{version} #{env} release")
     File.mkdir_p(release_dir)
@@ -39,7 +37,7 @@ defmodule Mix.Tasks.Lambda.Build do
       "docker rm #{container} > /dev/null 2>&1 || true",
       "docker build --build-arg MIX_ENV=#{env} -t #{image} -f #{dockerfile} .",
       "docker run --name #{container} #{image}",
-      "docker cp #{container}:/workspace/lambda.zip #{release_dir}/lambda.#{env}.zip",
+      "docker cp #{container}:/workspace/#{zipfile} #{zipfile}",
       "docker rm #{container}"
     ]
 
@@ -57,5 +55,11 @@ defmodule Mix.Tasks.Lambda.Build do
 
     Mix.shell().info("Lambda release built")
     Mix.shell().info("Artifact: #{release_dir}/lambda.#{env}.zip")
+  end
+
+  defp app_name() do
+    Mix.Project.config()
+    |> Keyword.fetch!(:app)
+    |> to_string
   end
 end

@@ -13,15 +13,19 @@ defmodule Mix.Tasks.Lambda.Bootstrap do
 
   @shortdoc "Generate a bootstrap script for the project"
   def run(_) do
-    name =
-      Mix.Project.config()
-      |> Keyword.fetch!(:app)
-      |> to_string
+    app = app_name()
+    env = Mix.env()
 
-    path = "_build/#{Mix.env()}/rel/#{name}/bootstrap"
+    path = "_build/#{env}/rel/#{app}/bootstrap"
 
-    Mix.Generator.create_file(path, bootstrap(name))
+    Mix.Generator.create_file(path, bootstrap(app))
     File.chmod!(path, 0o777)
+  end
+
+  defp app_name() do
+    Mix.Project.config()
+    |> Keyword.fetch!(:app)
+    |> to_string
   end
 
   # The bootstrap script contents

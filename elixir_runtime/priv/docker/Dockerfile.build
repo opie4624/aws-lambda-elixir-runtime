@@ -19,4 +19,4 @@ ENV MIX_ENV=${MIX_ENV}
 
 RUN mix do deps.get, compile, release, lambda.bootstrap, lambda.zip
 
-CMD echo "output: /workspace/lambda.zip"
+CMD echo "build complete"
