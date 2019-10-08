@@ -17,6 +17,11 @@ COPY . .
 ARG MIX_ENV=prod
 ENV MIX_ENV=${MIX_ENV}
 
-RUN mix do deps.get, compile, release, lambda.bootstrap, lambda.zip
+RUN mix do \
+  deps.get,
+  compile,
+  release --no-compile --overwrite,
+  lambda.bootstrap --no-compile --overwrite,
+  lambda.zip --no-compile --overwrite
 
 CMD echo "build complete"
