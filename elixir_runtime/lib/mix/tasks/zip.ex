@@ -14,7 +14,7 @@ defmodule Mix.Tasks.Lambda.Zip do
     cmd = "cd #{release_dir} && \
     chmod +x bin/#{app} && \
     chmod +x releases/#{version}/elixir && \
-    chmod +x erts-*/bin/erl && \
+    chmod +x erts-*/bin/* && \
     zip -r #{app}_lambda.zip * && \
     mv #{app}_lambda.zip ../"
 
