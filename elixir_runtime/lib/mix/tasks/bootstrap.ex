@@ -33,7 +33,7 @@ defmodule Mix.Tasks.Lambda.Bootstrap do
     """
     \#!/bin/bash
 
-    set -x
+    set -e
 
     BASE=$(dirname "$0")
     EXE=$BASE/bin/#{app}
