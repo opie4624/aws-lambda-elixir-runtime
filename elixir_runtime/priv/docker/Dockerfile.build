@@ -17,8 +17,7 @@ COPY . .
 ARG MIX_ENV=prod
 ENV MIX_ENV=${MIX_ENV}
 
-RUN rm -rf _build && \
-    mix do \
+RUN mix do \
     deps.get, \
     compile, \
     release, \
