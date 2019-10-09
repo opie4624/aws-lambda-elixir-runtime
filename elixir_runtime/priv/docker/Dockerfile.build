@@ -19,7 +19,7 @@ ENV MIX_ENV=${MIX_ENV}
 
 RUN mix do \
     deps.get, \
-    compile, \
+    compile --overwrite, \
     release --no-compile --overwrite, \
     lambda.bootstrap --no-compile --overwrite, \
     lambda.zip --no-compile --overwrite
